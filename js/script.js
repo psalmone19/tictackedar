@@ -14,6 +14,7 @@ for (var i = 0; i < 9; i++) {
     if (board[squareIndex] == '') {
         board[squareIndex] = turn;
         drawBoard();
+        checkWin();
         switchTurn();
     }
   })
@@ -22,8 +23,9 @@ for (var i = 0; i < 9; i++) {
 // given an HTML element, it will determine the index of the square on the board
 function getSquareIndex(target) {
   for (var j=0; j < 9; j++) {
+    // check if the current iterated square is the square that was clicked
     if (squares[j] === target) {
-      return j;
+      return j; // return the index, not the DOM node
     }
   }
 }
@@ -43,4 +45,26 @@ function switchTurn() {
     turn = 'O';
   else
     turn = 'X';
+}
+
+
+function checkWin() {
+  var winCombos = [
+    [0,3,6],
+    [1,4,7],
+    [2,5,8],
+    [0,1,2],
+    [3,4,5],
+    [6,7,8],
+    [0,4,8],
+    [2,4,6]
+  ]
+  for(var i=0; i < winCombos.length; i++) {
+    var winCombo = winCombos[i];
+    if (board[winCombo[0]] === board[winCombo[1]] &&
+        board[winCombo[1]] === board[winCombo[2]] &&
+        board[winCombo[0]] !== '') {
+        alert(turn + ' Wins!');
+    }
+  }
 }
