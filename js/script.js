@@ -1,5 +1,5 @@
 // models
-var board = ['','','','','','','',''];
+var board = ['','','','','','','','',''];
 var turn = 'X';
 
 
@@ -10,16 +10,24 @@ var squares = document.querySelectorAll('.square');
 // set up click listeners for my squares
 for (var i = 0; i < 9; i++) {
   squares[i].addEventListener('click', function(e) {
-    // loop through squares again and check which node was clicked
-    for (var j=0; j < 9; j++) {
-      if (squares[j] === e.target && board[j] === '') {
-        board[j] = turn;
+    var squareIndex = getSquareIndex(e.target)
+    if (board[squareIndex] == '') {
+        board[squareIndex] = turn;
         drawBoard();
         switchTurn();
-      }
     }
   })
 }
+
+// given an HTML element, it will determine the index of the square on the board
+function getSquareIndex(target) {
+  for (var j=0; j < 9; j++) {
+    if (squares[j] === target) {
+      return j;
+    }
+  }
+}
+
 
 // drawing the model to the screen
 function drawBoard() {
